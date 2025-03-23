@@ -62,8 +62,8 @@ export async function createServer() {
   // Auth setup
   server.auth.strategy("session", "cookie", {
     cookie: {
-      name: "ourHospital",
-      password: "secretpasswordnotrevealedtoanyone",
+      name: process.env.COOKIE_NAME,
+      password: process.env.COOKIE_PASSWORD,
       isSecure: false,
     },
     redirectTo: "/",

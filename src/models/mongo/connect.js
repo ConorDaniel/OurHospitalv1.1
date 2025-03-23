@@ -7,17 +7,20 @@ Mongoose.set("strictQuery", true);
 export const db = Mongoose.connection;
 
 export function connectMongo() {
-  Mongoose.connect(process.env.db);
+  const dbUrl = process.env.MONGO_URL || process.env.LOCAL_DB;
+
+  console.log(`Connecting to MongoDB at: ${dbUrl}`);
+  Mongoose.connect(dbUrl);
 
   db.on("error", (err) => {
-    console.log(`database connection error: ${err}`);
+    console.log(`Database connection error: ${err}`);
   });
 
   db.on("disconnected", () => {
-    console.log("database disconnected");
+    console.log("⚠️  Database disconnected");
   });
 
   db.once("open", function () {
-    console.log(`database connected to ${this.name} on ${this.host}`);
+    console.log(`✅ Connected to database '${this.name}' on host '${this.host}'`);
   });
 }
